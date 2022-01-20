@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product{% endblock %}
+
+{% block body %}
+<br>
+<a href="{{ path('product')}}">Retour</a>
+<h2>Produit : {{product.name}}</h2>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Description</th>
+        <th scope="col">Created At</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr>
+                <th scope="row">{{product.name}}</a></th>
+                <td>{{product.price}}</td>
+                <td>{{ product.description}}</td>
+                <td>{{product.createdAt | date('d/m/Y')}}</td>
+            </tr>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
