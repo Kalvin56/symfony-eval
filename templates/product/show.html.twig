@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product{% endblock %}
+{% block title %}Produit{% endblock %}
 
 {% block body %}
 <br>
@@ -10,20 +10,47 @@
 <table class="table">
     <thead>
         <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Price</th>
+        <th scope="col">Nom</th>
+        <th scope="col">Prix</th>
         <th scope="col">Description</th>
-        <th scope="col">Created At</th>
+        <th scope="col">Créé le</th>
         </tr>
     </thead>
     <tbody>
             <tr>
                 <th scope="row">{{product.name}}</a></th>
                 <td>{{product.price}}</td>
-                <td>{{ product.description}}</td>
+                <td>{{product.description}}</td>
                 <td>{{product.createdAt | date('d/m/Y')}}</td>
             </tr>
         </tr>
     </tbody>
 </table>
+<button class="btn btn-primary" id="panier">Ajouter au panier</button>
+<div id="alert" role="alert"></div>
+
+
+<script type="text/javascript">
+    let panier = document.querySelector('#panier');
+    let alert = document.querySelector('#alert');
+    let id = '{{ product.id }}';
+    let name = '{{ product.name }}';
+    panier.addEventListener('click', () => {
+        fetch(`/cart/add/${id}`)
+        .then((response) => {
+            if(response.status ==  200){
+                console.log(response);
+                alert.setAttribute("class", "alert alert-success mt-4");
+                alert.textContent = `Le produit ${name} à bien été ajouté au panier`;
+            }
+            else{
+                console.log(response);
+                alert.setAttribute("class", "alert alert-danger mt-4");
+                alert.textContent = 'yo';
+            }
+        })
+    })
+</script>
+
+
 {% endblock %}
