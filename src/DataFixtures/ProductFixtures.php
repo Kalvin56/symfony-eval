@@ -21,6 +21,8 @@ class ProductFixtures extends Fixture
             $price = $faker->randomNumber(2);
             $description = $faker->text(400);
             $created_at = new \DateTime;
+            $day = rand(1,20);
+            $created_at->modify('-'.$day.' day');
             $product->setName($name)
                     ->setPrice($price)
                     ->setDescription($description)

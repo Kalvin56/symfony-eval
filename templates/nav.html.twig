@@ -1,22 +1,24 @@
+{% set route_name = app.request.attributes.get('_route') %}
+
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">E-commerce website</a>
+        <a class="navbar-brand" href="{{path('home')}}">E-commerce website</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Accueil</a>
+                <li {% if route_name == "home" %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+                    <a class="nav-link" href="{{path('home')}}">Accueil</a>
                 </li>
-                <li class="nav-item">
+                <li {% if route_name matches '{^product}' %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
                     <a class="nav-link" href="{{path('product')}}">Produits</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Commandes</a>
+                <li {% if route_name matches '{^command}' %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+                    <a class="nav-link" href="{{path('command')}}">Commandes</a>
                 </li>
-                <li class="nav-item">
+                <li {% if route_name matches '{^cart}' %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
                     <a class="nav-link" href="{{path('cart')}}">Panier</a>
                 </li>
             </ul>

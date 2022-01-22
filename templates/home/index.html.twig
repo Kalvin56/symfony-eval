@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+<br>
+<h2>Accueil</h2>
+<br>
+<div class="row">
+    <div class="col">
+        <h3>Les 5 produits les plus récents</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Créé le</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in productsDate %}
+                    <tr>
+                        <th scope="row"><a href="product/{{product.id}}">{{product.name}}</a></th>
+                        <td>{{product.createdAt | date('d/m/Y')}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col">
+        <h3>Les 5 produits les moins cher</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prix</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in productsPrice %}
+                    <tr>
+                        <th scope="row"><a href="product/{{product.id}}">{{product.name}}</a></th>
+                        <td>{{product.price}} €</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

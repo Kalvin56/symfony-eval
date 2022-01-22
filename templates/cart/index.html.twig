@@ -35,8 +35,33 @@
         </tr>
     </tbody>
 </table>
-{% for message in app.flashes('alert') %}
+
+<div class="col col-lg-4">
+    {{ form_start(commandForm) }}
+        <div class="form-group">
+            <label for="article_title">Email</label>
+            {{ form_widget(commandForm.email) }}
+            <small class="text-danger">
+                {{ form_errors(commandForm.email) }}
+            </small>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">
+            Commander
+        </button>
+
+        {{ form_errors(commandForm) }}
+    {{ form_end(commandForm) }}
+</div>
+
+{% for message in app.flashes('alert-success') %}
     <div role="alert" class="alert alert-success mt-4">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% for message in app.flashes('alert-error') %}
+    <div role="alert" class="alert alert-danger mt-4">
         {{ message }}
     </div>
 {% endfor %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+{% block body %}
+<br>
+<a href="{{ path('command')}}">Retour</a>
+<h2>Commande n° {{command.id}}</h2>
+<h3>{{command.email}} / {{nbProduits}} produits</h3>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Nom</th>
+            <th scope="col">Prix</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+            <tr>
+                <th scope="row"><a href="{{path('product.show', {id : product.id})}}">{{product.name}}</a></th>
+                <td>{{product.price}} €</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <th colspan="4">Total : {{total}} €</th>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}
