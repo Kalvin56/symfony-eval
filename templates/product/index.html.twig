@@ -19,12 +19,11 @@
         {% for product in products %}
             <tr>
                 <th scope="row"><a href="product/{{product.id}}">{{product.name}}</a></th>
-                <td>{{product.price}}</td>
+                <td>{{product.price}} €</td>
                 <td>{{ product.description|slice(0, 80) ~ '...'}} <a href="product/{{product.id}}">voir plus</a></td>
                 <td>{{product.createdAt | date('d/m/Y')}}</td>
             </tr>
         {% endfor %}
-        </tr>
     </tbody>
 </table>
 {% endblock %}

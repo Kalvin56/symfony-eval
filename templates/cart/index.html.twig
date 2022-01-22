@@ -9,13 +9,36 @@
 <table class="table">
     <thead>
         <tr>
-        <th scope="col">Nom</th>
-        <th scope="col">Quantite</th>
-        <th scope="col">Prix</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Quantite</th>
+            <th scope="col">Prix</th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
+        {% for product in products %}
+            <tr>
+                <th scope="row"><a href="product/{{product.id}}">{{product.name}}</a></th>
+                <td>{{product.quantite}}</td>
+                <td>{{product.price}} €</td>
+                <td>
+                    <form action="{{path('cart.delete', {id : product.id})}}" onsubmit="return confirm('Etes-vous sûr de supprimer ce produit ?')">
+                        <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input class="btn btn-danger" type="submit" value="Supprimer">
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <th colspan="4">Total : {{total}} €</th>
         </tr>
     </tbody>
 </table>
+{% for message in app.flashes('alert') %}
+    <div role="alert" class="alert alert-success mt-4">
+        {{ message }}
+    </div>
+{% endfor %}
+
 {% endblock %}

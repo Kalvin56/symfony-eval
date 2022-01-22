@@ -17,12 +17,11 @@
         </tr>
     </thead>
     <tbody>
-            <tr>
-                <th scope="row">{{product.name}}</a></th>
-                <td>{{product.price}}</td>
-                <td>{{product.description}}</td>
-                <td>{{product.createdAt | date('d/m/Y')}}</td>
-            </tr>
+        <tr>
+            <th scope="row">{{product.name}}</a></th>
+            <td>{{product.price}} €</td>
+            <td>{{product.description}}</td>
+            <td>{{product.createdAt | date('d/m/Y')}}</td>
         </tr>
     </tbody>
 </table>
@@ -46,7 +45,7 @@
             else{
                 console.log(response);
                 alert.setAttribute("class", "alert alert-danger mt-4");
-                alert.textContent = 'yo';
+                alert.textContent = 'Erreur lors de l\'ajout du produit ${name} au panier';
             }
         })
     })
