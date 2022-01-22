@@ -19,7 +19,13 @@
         {% for product in products %}
             <tr>
                 <th scope="row"><a href="product/{{product.id}}">{{product.name}}</a></th>
-                <td>{{product.quantite}}</td>
+                <td>
+                    <form action="{{path('cart.update', {id : product.id})}}">
+                        <input type="hidden" name="token" value="{{ csrf_token('update-item') }}">
+                        <input type="number" name="quantity" min="1" max="10" value="{{product.quantite}}">
+                        <input class="btn btn-success" type="submit" value="Valider">
+                    </form>
+                </td>
                 <td>{{product.price}} €</td>
                 <td>
                     <form action="{{path('cart.delete', {id : product.id})}}" onsubmit="return confirm('Etes-vous sûr de supprimer ce produit ?')">

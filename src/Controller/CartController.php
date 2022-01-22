@@ -33,7 +33,7 @@ class CartController extends AbstractController
                 "price" => $product->getPrice(),
                 "quantite" => $value
             ];
-            $total += $product->getPrice();
+            $total += $product->getPrice()*$value;
         }
 
         $command = new Command();
@@ -130,6 +130,43 @@ class CartController extends AbstractController
             $session->set('panier', $cart);
 
             $this->addFlash('alert-success', "Le produit {$product->getName()} a bien été supprimé !");
+            return $this->redirectToRoute('cart');
+        }else{
+            throw new InvalidCsrfTokenException();
+        }
+        
+    }
+
+    /**
+     * @Route("/cart/update/{id}", name="cart.update")
+     */
+    public function update(SessionInterface $session, Request $request, ProductRepository $productRepository): Response
+    {
+
+        $id = $request->attributes->get('id');
+        $product = $productRepository->find($id);
+        if (!$product)
+        {
+            $this->addFlash('alert-error', "Le produit n'existe pas");
+            return $this->redirectToRoute('cart');
+        }
+        $csrfToken = $_GET['token'];
+        if ($this->isCsrfTokenValid('update-item', $csrfToken))
+        {
+            $cart = $session->get('panier', []);
+            if(!isset($cart[$id])){
+                $this->addFlash('alert-error', "Le produit n'est pas présent dans le panier");
+                return $this->redirectToRoute('cart');
+            }
+            $quantity = $_GET['quantity'];
+            if(!is_numeric($quantity) || !($quantity > 0 and $quantity < 11)){
+                $this->addFlash('alert-error', "Erreur de l'ajout de la quantité");
+                return $this->redirectToRoute('cart');
+            }
+            $cart[$id] = $quantity;
+            $session->set('panier', $cart);
+
+            $this->addFlash('alert-success', "La quantité du produit {$product->getName()} a bien été mise à jour !");
             return $this->redirectToRoute('cart');
         }else{
             throw new InvalidCsrfTokenException();
