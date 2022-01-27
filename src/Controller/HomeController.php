@@ -10,13 +10,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/home", name="home")
+     * @Route("/", name="home")
      */
     public function index(ProductRepository $productRepository): Response
     {
 
         $productsPrice = $productRepository->findBy([],["price" => "ASC"], 5);
-        $productsDate = $productRepository->findBy([],["createdAt" => "ASC"], 5);
+        $productsDate = $productRepository->findBy([],["createdAt" => "DESC"], 5);
 
         return $this->render('home/index.html.twig', [
             'productsPrice' => $productsPrice,
