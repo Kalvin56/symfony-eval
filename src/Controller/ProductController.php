@@ -6,6 +6,7 @@ use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProductController extends AbstractController
@@ -25,16 +26,22 @@ class ProductController extends AbstractController
     /**
      * @Route("/product/{id}", name="product.show")
      */
-    public function show(ProductRepository $productRepository, Request $request): Response
+    public function show(ProductRepository $productRepository, Request $request, SessionInterface $session): Response
     {
         $id = $request->attributes->get('id');
         $product = $productRepository->find($id);
+        $cart = $session->get('panier', []);
+        $disabled = false;
+        if(isset($cart[$id])){
+            $disabled = true;
+        }
         if (!$product)
         {
             throw $this->createNotFoundException('The product does not exist');
         }
         return $this->render('product/show.html.twig', [
             'product' => $product,
+            'disabled' => $disabled,
         ]);
     }
 
